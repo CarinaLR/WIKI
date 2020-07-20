@@ -8,3 +8,15 @@ def index(request):
         "entries": util.list_entries()
     })
 
+
+def entry_page(request, title):
+    if request.method == "GET":
+        return render(request, "encyclopedia/entry_page.html", {
+            "title": util.get_entry()
+        })
+    else:
+        return render(request, "encyclopedia/error.html")
+
+
+def create(request):
+    return render(request, "encyclopedia/create.html")
