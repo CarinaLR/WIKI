@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView
+from django.template import RequestContext
 
 from . import util
 from markdown2 import Markdown
@@ -12,9 +13,17 @@ markdowner = Markdown()
 
 
 def index(request):
-    return render(request, "encyclopedia/index.html", {
-        "entries": util.list_entries(),
-    })
+    # Set variables.
+    text = request.POST.get("q")
+    # Get value from form.
+    if request.method == "POST":
+        return render(request, "encyclopedia/entry_page.html", {
+            "title": markdowner.convert(util.get_entry(text))
+        })
+    else:
+        return render(request, "encyclopedia/index.html", {
+            "entries": util.list_entries(),
+        })
 
 
 def entry_page(request, title):
