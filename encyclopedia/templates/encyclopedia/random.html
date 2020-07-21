@@ -5,8 +5,10 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Page not found!</h1>
-
-    <h2>Sorry, the page you requested was not foud</h2>
+    <h2>Random Content</h2>
+<div>
+  <hr>
+  <p>{{ random| safe }}</p>
+</div>
 
 {% endblock %}

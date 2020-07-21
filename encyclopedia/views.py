@@ -13,7 +13,7 @@ markdowner = Markdown()
 
 
 def index(request):
-    # Set variables.
+    # Set variables to post the value from form tag.
     text = request.POST.get("q")
     # Get value from form.
     if request.method == "POST":
@@ -37,3 +37,13 @@ def entry_page(request, title):
 
 def create(request):
     return render(request, "encyclopedia/create.html")
+
+
+def random(request):
+    # Set variables
+    entries = util.list_entries()
+    print("entries")
+    val = random.random
+    return render(request, "encyclopedia/entry_page.html", {
+        "random": markdowner.convert(util.get_entry(val))
+    })
