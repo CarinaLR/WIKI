@@ -3,6 +3,7 @@ from django.views.generic import ListView
 
 from . import util
 from markdown2 import Markdown
+# Set variable to use in the instance.
 markdowner = Markdown()
 # markdowner.convert("*boo!*")
 # u'<p><em>boo!</em></p>\n'
@@ -12,8 +13,7 @@ markdowner = Markdown()
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
-        "entries": util.list_entries()
-
+        "entries": util.list_entries(),
     })
 
 
