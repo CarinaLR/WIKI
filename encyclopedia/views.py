@@ -63,7 +63,11 @@ def create(request):
 
 def edit_page(request):
     # Set variables
-    return render(request, "encyclopedia/edit_page.html")
+    title = request.POST.get("title")
+    initial = util.get_entry(title)
+    return render(request, "encyclopedia/edit_page.html", {
+        "content": initial
+    })
 
 
 def random(request):
