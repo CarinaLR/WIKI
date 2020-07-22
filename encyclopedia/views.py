@@ -17,12 +17,15 @@ def index(request):
     text = request.POST.get("q")
     # Get value from form.
     if request.method == "POST":
+        # Exceptions comes in different types, happens when the response is not true.
         try:
             return render(request, "encyclopedia/entry_page.html", {
                 "title": markdowner.convert(util.get_entry(text))
             })
         except TypeError:
-            return render(request, "encyclopedia/error.html")
+            return render(request, "encyclopedia/search_results.html", {
+                "entries": util.list_entries(),
+            })
     else:
         return render(request, "encyclopedia/index.html", {
             "entries": util.list_entries(),
@@ -31,9 +34,12 @@ def index(request):
 
 def entry_page(request, title):
     if request.method == "GET":
-        return render(request, "encyclopedia/entry_page.html", {
-            "title": markdowner.convert(util.get_entry(title))
-        })
+        try:
+            return render(request, "encyclopedia/entry_page.html", {
+                "title": markdowner.convert(util.get_entry(title))
+            })
+        except 404:
+            return render(request, "encyclopedia/error.html")
     else:
         return render(request, "encyclopedia/error.html")
 
