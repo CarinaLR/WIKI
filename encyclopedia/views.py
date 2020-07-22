@@ -51,10 +51,14 @@ def create(request):
     # Set variables
     title = request.POST.get("title")
     content = request.POST.get("content")
+
     if request.method == "POST":
+        save_page = util.save_entry(title, content)
+        preview = entry_page(request, title)
         return render(request, "encyclopedia/success.html", {
             "title": title,
-            "content": content
+            "content": content,
+            "preview": preview
         })
     else:
         return render(request, "encyclopedia/create.html")

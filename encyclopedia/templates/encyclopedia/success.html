@@ -8,7 +8,12 @@
 <hr>
     <h1>Your page has been saved!</h1>
     <hr>
-<h2>{{ title }}</h2>
-<p>{{ content }}<p>
+<h2>{{ title | safe }}</h2>
+<p>{{ content | safe}}<p>
+<div>
+<h2>Preview</h2>
+  <hr>
+  <p>{{ title| safe }}</p>
+</div>
 
 {% endblock %}
