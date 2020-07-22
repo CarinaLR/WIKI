@@ -5,8 +5,10 @@
 {% endblock %}
 
 {% block body %}
-    <h1>All Results</h1>
-
+    <h1>{{ search | safe }}</h1>
+    <h2>Below is a list of all entries available</h2>
+    <hr>
+    <h3>{{ item }}</h3>
     <ul>
         {% for entry in entries %}
             <li><a href="{% url 'title' entry %}">{{ entry }}</a></li>

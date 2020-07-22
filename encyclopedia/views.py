@@ -15,6 +15,8 @@ markdowner = Markdown()
 def index(request):
     # Set variables to post the value from form tag.
     text = request.POST.get("q")
+    item_lists = util.list_entries()
+
     # Get value from form.
     if request.method == "POST":
         # Exceptions comes in different types, happens when the response is not true.
@@ -25,6 +27,7 @@ def index(request):
         except TypeError:
             return render(request, "encyclopedia/search_results.html", {
                 "entries": util.list_entries(),
+                "search": text.capitalize()
             })
     else:
         return render(request, "encyclopedia/index.html", {
