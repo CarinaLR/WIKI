@@ -43,8 +43,6 @@ def entry_page(request, title):
             })
         except 404:
             return render(request, "encyclopedia/error.html")
-    else:
-        return render(request, "encyclopedia/error.html")
 
 
 def create(request):
@@ -61,6 +59,11 @@ def create(request):
         })
     else:
         return render(request, "encyclopedia/create.html")
+
+
+def edit_page(request):
+    # Set variables
+    return render(request, "encyclopedia/edit_page.html")
 
 
 def random(request):
