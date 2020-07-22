@@ -48,7 +48,16 @@ def entry_page(request, title):
 
 
 def create(request):
-    return render(request, "encyclopedia/create.html")
+    # Set variables
+    title = request.POST.get("title")
+    content = request.POST.get("content")
+    if request.method == "POST":
+        return render(request, "encyclopedia/success.html", {
+            "title": title,
+            "content": content
+        })
+    else:
+        return render(request, "encyclopedia/create.html")
 
 
 def random(request):

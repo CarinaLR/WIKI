@@ -5,10 +5,13 @@
 {% endblock %}
 
 {% block body %}
+    {% if search in entries%}
     <h1>{{ search | safe }}</h1>
+    {% else %}
+    <h1>Results</h1>
+    {% endif %}
     <h2>Below is a list of all entries available</h2>
     <hr>
-    <h3>{{ item }}</h3>
     <ul>
         {% for entry in entries %}
             <li><a href="{% url 'title' entry %}">{{ entry }}</a></li>
