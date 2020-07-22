@@ -56,10 +56,8 @@ def create(request):
         # If there's something to post, takes that input and use it in util functions.
         save_page = util.save_entry(title, content)
         preview = entry_page(request, title)
-        return render(request, "encyclopedia/success.html", {
-            "title": title,
-            "content": content,
-            "preview": preview
+        return render(request, "encyclopedia/entry_page.html", {
+            "title": markdowner.convert(util.get_entry(title))
         })
     else:
         return render(request, "encyclopedia/create.html")
