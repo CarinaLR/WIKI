@@ -53,6 +53,7 @@ def create(request):
     content = request.POST.get("content")
 
     if request.method == "POST":
+        # If there's something to post, takes that input and use it in util functions.
         save_page = util.save_entry(title, content)
         preview = entry_page(request, title)
         return render(request, "encyclopedia/success.html", {

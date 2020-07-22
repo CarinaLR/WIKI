@@ -6,12 +6,12 @@
 
 {% block body %}
     <h1>Create New Page</h1>
-
     <form method="POST">
                 {% csrf_token %}
     <input type="text" name="title">
     <input type="submit">
     <hr>
+    <small>To save content, please write your content in a Markdown syntax</small>
     <textarea name="content"> </textarea>
     </form>
 
