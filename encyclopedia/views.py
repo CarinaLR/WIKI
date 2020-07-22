@@ -17,9 +17,12 @@ def index(request):
     text = request.POST.get("q")
     # Get value from form.
     if request.method == "POST":
-        return render(request, "encyclopedia/entry_page.html", {
-            "title": markdowner.convert(util.get_entry(text))
-        })
+        try:
+            return render(request, "encyclopedia/entry_page.html", {
+                "title": markdowner.convert(util.get_entry(text))
+            })
+        except TypeError:
+            return render(request, "encyclopedia/error.html")
     else:
         return render(request, "encyclopedia/index.html", {
             "entries": util.list_entries(),
