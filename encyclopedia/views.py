@@ -6,10 +6,6 @@ from . import util
 from markdown2 import Markdown
 # Set variable to use in the instance.
 markdowner = Markdown()
-# markdowner.convert("*boo!*")
-# u'<p><em>boo!</em></p>\n'
-# markdowner.convert("**boom!**")
-# u'<p><strong>boom!</strong></p>\n'
 
 
 def index(request):
@@ -37,9 +33,12 @@ def index(request):
 
 def entry_page(request, title):
     if request.method == "GET":
+        # Get content from markdown file
+        content = util.get_entry(title)
         try:
             return render(request, "encyclopedia/entry_page.html", {
-                "title": markdowner.convert(util.get_entry(title))
+                "title": markdowner.convert(util.get_entry(title)),
+                "content": content
             })
         except 404:
             return render(request, "encyclopedia/error.html")
@@ -63,8 +62,7 @@ def create(request):
 
 def edit_page(request):
     # Set variables
-    title = request.POST.get("title")
-    initial = util.get_entry(title)
+    initial = util.get_entry("content")
     return render(request, "encyclopedia/edit_page.html", {
         "content": initial
     })
