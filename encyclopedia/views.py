@@ -63,9 +63,11 @@ def create(request):
 
 def edit_page(request):
     # Set variables
-    initial = util.get_entry("content")
+    title = request.POST.get("title")
+    print("Text -", title)
+    initial = util.get_entry("text")
     return render(request, "encyclopedia/edit_page.html", {
-        "content": initial
+        "content": util.get_entry(title)
     })
 
 
