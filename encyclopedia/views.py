@@ -23,11 +23,7 @@ def index(request):
                 "search": search(request)
             })
         except TypeError:
-            return render(request, "encyclopedia/search_results.html", {
-                "text": text.capitalize(),
-                "headline": "Your available list",
-                "entries": util.list_entries(),
-            })
+            return render(request, "encyclopedia/error.html")
     else:
         return render(request, "encyclopedia/index.html", {
             "entries": util.list_entries(),
@@ -88,11 +84,12 @@ def random_page(request):
 def search(request):
     # Set variables
     text = request.POST.get("q")
+    # Take the value from the input and capitalize it to match with the search on list
     textC = text.capitalize()
-    print("Text -", textC)
+    # Store the list of file to iterate
     item_lists = util.list_entries()
-    print("List -", item_lists)
+    # With for in, check each item of the list
     for item in item_lists:
+        # If the input text (str) is in the item (str), return the item.
         if textC in item:
-            print("Item -", item)
             return item
