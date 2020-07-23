@@ -47,14 +47,24 @@ def create(request):
     # Set variables
     title = request.POST.get("title")
     content = request.POST.get("content")
-
+    headline = "Title already exists"
     if request.method == "POST":
-        # If there's something to post, takes that input and use it in util functions.
-        save_page = util.save_entry(title, content)
-        preview = entry_page(request, title)
-        return render(request, "encyclopedia/entry_page.html", {
-            "title": markdowner.convert(util.get_entry(title))
-        })
+        # If entry already exists with same title
+        textC = title.capitalize()
+        item_list = item_lists = util.list_entries()
+        for item in item_lists:
+            # If the input text (str) is in the item (str), return the item.
+            if textC in item_list:
+                return render(request, "encyclopedia/error.html", {
+                    "headline": headline
+                })
+            else:
+                # If there's something to post, takes that input and use it in util functions.
+                save_page = util.save_entry(title, content)
+                preview = entry_page(request, title)
+                return render(request, "encyclopedia/entry_page.html", {
+                    "title": markdowner.convert(util.get_entry(title))
+                })
     else:
         return render(request, "encyclopedia/create.html")
 
