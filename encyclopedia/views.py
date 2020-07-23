@@ -16,6 +16,7 @@ def index(request):
 
     # Get value from form.
     if request.method == "POST":
+        search(request)
         # Exceptions comes in different types, happens when the response is not true.
         try:
             return render(request, "encyclopedia/entry_page.html", {
@@ -81,3 +82,15 @@ def random_page(request):
     return render(request, "encyclopedia/random.html", {
         "title": markdowner.convert(util.get_entry(random_choice))
     })
+
+
+def search(request):
+    # Set variables
+    text = request.POST.get("q")
+    textC = text.capitalize()
+    print("Text -", textC)
+    item_lists = util.list_entries()
+    print("List -", item_lists)
+    for item in item_lists:
+        if textC in item:
+            print("Item -", item)
