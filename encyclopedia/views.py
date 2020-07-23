@@ -16,16 +16,17 @@ def index(request):
 
     # Get value from form.
     if request.method == "POST":
-        search(request)
         # Exceptions comes in different types, happens when the response is not true.
         try:
-            return render(request, "encyclopedia/entry_page.html", {
-                "title": markdowner.convert(util.get_entry(text))
+            return render(request, "encyclopedia/search_results.html", {
+                "text": text.capitalize(),
+                "search": search(request)
             })
         except TypeError:
             return render(request, "encyclopedia/search_results.html", {
+                "text": text.capitalize(),
+                "headline": "Your available list",
                 "entries": util.list_entries(),
-                "search": text.capitalize()
             })
     else:
         return render(request, "encyclopedia/index.html", {
@@ -94,3 +95,4 @@ def search(request):
     for item in item_lists:
         if textC in item:
             print("Item -", item)
+            return item
