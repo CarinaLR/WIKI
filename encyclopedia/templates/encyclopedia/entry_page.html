@@ -6,11 +6,15 @@
 
 {% block body %}
     <h2>Content</h2>
+    <hr>
 <div>
   <hr>
-  <p>{{ title| safe }}</p>
+  {{ title| safe }}
 </div>
+<form method="POST">
+        {% csrf_token %}
+    <input type="submit" value="Edit">
+</form>
 
-<a href="{% url 'edit_page'%}">Edit</a>
 
 {% endblock %}

@@ -32,15 +32,17 @@ def index(request):
 
 def entry_page(request, title):
     if request.method == "GET":
-        # Get content from markdown file
-        content = util.get_entry(title)
-        try:
-            return render(request, "encyclopedia/entry_page.html", {
-                "title": markdowner.convert(util.get_entry(title)),
-                "content": content
-            })
-        except 404:
-            return render(request, "encyclopedia/error.html")
+        return render(request, "encyclopedia/entry_page.html", {
+            "title": markdowner.convert(util.get_entry(title)),
+        })
+    if request.method == "POST":
+        see_title = title
+        print("see_title -", see_title)
+        return edit_page(request, see_title)
+    else:
+        return render(request, "encyclopedia/error.html", {
+            "headline": "Page not found",
+        })
 
 
 def create(request):
@@ -69,10 +71,10 @@ def create(request):
         return render(request, "encyclopedia/create.html")
 
 
-def edit_page(request):
+def edit_page(request, title):
     # Set variables
-    title = request.POST.get("title")
-    print("Text -", title)
+    # title = request.POST.get("title")
+    # print("Text -", title)
 
     return render(request, "encyclopedia/edit_page.html", {
         "content": util.get_entry(title)
