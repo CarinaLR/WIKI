@@ -68,11 +68,8 @@ def edit_page(request):
     })
 
 
-def random(request):
+def random_page(request):
     # Set variables
     entries = util.list_entries()
-    print("entries")
-    val = random.random
-    return render(request, "encyclopedia/entry_page.html", {
-        "random": markdowner.convert(util.get_entry(val))
-    })
+
+    return render(request, "encyclopedia/random.html")
