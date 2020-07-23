@@ -1,3 +1,4 @@
+import random
 from django.shortcuts import render
 from django.views.generic import ListView
 from django.template import RequestContext
@@ -71,5 +72,10 @@ def edit_page(request):
 def random_page(request):
     # Set variables
     entries = util.list_entries()
+    print("List -", entries)
+    random_choice = random.choice(entries)
+    print("random_choice", random_choice)
 
-    return render(request, "encyclopedia/random.html")
+    return render(request, "encyclopedia/random.html", {
+        "title": markdowner.convert(util.get_entry(random_choice))
+    })
