@@ -73,12 +73,21 @@ def create(request):
 
 def edit_page(request, title):
     # Set variables
-    # title = request.POST.get("title")
-    # print("Text -", title)
-
-    return render(request, "encyclopedia/edit_page.html", {
-        "content": util.get_entry(title)
-    })
+    content = request.POST.get("content")
+    if request.method == "GET":
+        return render(request, "encyclopedia/edit_page.html", {
+            "content": util.get_entry(title)
+        })
+    # if request.method == "POST":
+    #     # If there's something to post, takes that input and use it in util functions.
+    #     save_page = util.save_entry(title, content)
+    #     return render(request, "encyclopedia/entry_page.html", {
+    #         "title": markdowner.convert(util.get_entry(title))
+    #     })
+    else:
+        return render(request, "encyclopedia/edit_page.html", {
+            "content": util.get_entry(title)
+        })
 
 
 def random_page(request):
