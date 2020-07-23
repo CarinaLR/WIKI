@@ -8,7 +8,7 @@
     <h1>Edit Page</h1>
     <form method="POST">
         {% csrf_token %}
-    <input type="submit" value="Edit">
+    <input type="submit" value="Save">
     <hr>
     <small>To edit content, please write your content in a Markdown syntax</small>
     <textarea name="content">{{ content }}</textarea>

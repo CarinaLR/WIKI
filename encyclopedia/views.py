@@ -49,7 +49,7 @@ def create(request):
     # Set variables
     title = request.POST.get("title")
     content = request.POST.get("content")
-    headline = "Title already exists"
+    headline = "File already exists"
     if request.method == "POST":
         # If entry already exists with same title
         textC = title.capitalize()
