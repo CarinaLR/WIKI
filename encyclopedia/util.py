@@ -36,3 +36,12 @@ def get_entry(title):
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
+
+
+def edit_entry(title):
+    # Load the file into file_content
+    file_content = [line for line in open(f"entries/{title}.md")]
+
+    # Overwrite it
+    writer = open(f'{title}.md', 'w')
+    writer.close()

@@ -40,7 +40,6 @@ def entry_page(request, title):
         })
     if request.method == "POST":
         see_title = title
-        print("see_title -", see_title)
         return edit_page(request, see_title)
     else:
         return render(request, "encyclopedia/error.html", {
@@ -77,20 +76,24 @@ def create(request):
 def edit_page(request, title):
     # Set variables
     content = request.POST.get("content")
-    if request.method == "GET":
+    if request.method == "POST":
+        content = util.get_entry(title)
         return render(request, "encyclopedia/edit_page.html", {
             "content": util.get_entry(title)
         })
-    # if request.method == "POST":
-    #     # If there's something to post, takes that input and use it in util functions.
-    #     save_page = util.save_entry(title, content)
-    #     return render(request, "encyclopedia/entry_page.html", {
-    #         "title": markdowner.convert(util.get_entry(title))
-    #     })
+        # If there's something to post, takes that input and use it in util functions.
+        save_page = util.edit_entry(title)
+        return render(request, "encyclopedia/entry_page.html", {
+            "title": markdowner.convert(util.get_entry(title))
+        })
     else:
-        return render(request, "encyclopedia/edit_page.html", {
-            "content": util.get_entry(title)
+        return render(request, "encyclopedia/entry_page.html", {
+            "title": markdowner.convert(util.get_entry(title))
         })
+    # else:
+    return render(request, "encyclopedia/entry_page.html", {
+        "title": markdowner.convert(util.get_entry(title))
+    })
 
 
 def random_page(request):
