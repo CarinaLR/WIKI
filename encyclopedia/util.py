@@ -38,10 +38,10 @@ def get_entry(title):
         return None
 
 
-def edit_entry(title):
-    # Load the file into file_content
-    file_content = [line for line in open(f"entries/{title}.md")]
-
-    # Overwrite it
-    writer = open(f'{title}.md', 'w')
-    writer.close()
+def edit_entry(title, content):
+    filename = f"entries/{title}.md"
+    if default_storage.exists(filename):
+        # Overwrite it
+        if default_storage.open(f'{title}.md', 'w'):
+            default_storage.delete(filename)
+            default_storage.save(filename, ContentFile(content))

@@ -1,6 +1,6 @@
 from random import choice
 import random
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.template import RequestContext
 
@@ -74,15 +74,23 @@ def create(request):
 
 
 def edit_page(request, title):
+    content = util.get_entry(title)
+    save = request.POST.get("save")
+    if content == None:
+        return render(request, "encyclopedia/error.html", {'headline': "Page Not Found"})
     # Set variables
     content = request.POST.get("content")
     if request.method == "POST":
         content = util.get_entry(title)
         return render(request, "encyclopedia/edit_page.html", {
-            "content": util.get_entry(title)
+            "content": util.get_entry(title),
+            # "save": util.edit_entry(title, new_content2)
         })
+        new_content = request.POST.get("content")
+        new_content2 = new_content
+    if save:
+        util.edit_entry(title, new_content2)
         # If there's something to post, takes that input and use it in util functions.
-        save_page = util.edit_entry(title)
         return render(request, "encyclopedia/entry_page.html", {
             "title": markdowner.convert(util.get_entry(title))
         })
