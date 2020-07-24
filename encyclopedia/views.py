@@ -1,3 +1,4 @@
+from random import choice
 import random
 from django.shortcuts import render
 from django.views.generic import ListView
@@ -13,7 +14,7 @@ def index(request):
     # Set variables to post the value from form tag.
     text = request.POST.get("q")
     item_lists = util.list_entries()
-
+    headline = "Page not found"
     # Get value from form.
     if request.method == "POST":
         # Exceptions comes in different types, happens when the response is not true.
@@ -23,7 +24,9 @@ def index(request):
                 "search": search(request)
             })
         except TypeError:
-            return render(request, "encyclopedia/error.html")
+            return render(request, "encyclopedia/error.html", {
+                "headline": headline
+            })
     else:
         return render(request, "encyclopedia/index.html", {
             "entries": util.list_entries(),
@@ -93,13 +96,22 @@ def edit_page(request, title):
 def random_page(request):
     # Set variables
     entries = util.list_entries()
-    print("List -", entries)
     random_choice = random.choice(entries)
-    print("random_choice", random_choice)
+    text = []
+    # Append value from choice to use it in post request.
+    text.append(random_choice)
+    choice = text[0]
 
-    return render(request, "encyclopedia/random.html", {
-        "title": markdowner.convert(util.get_entry(random_choice))
-    })
+    if request.method == "GET":
+        return render(request, "encyclopedia/random.html", {
+            "title": markdowner.convert(util.get_entry(random_choice)),
+        })
+    if request.method == "POST":
+        return edit_page(request, choice)
+    else:
+        return render(request, "encyclopedia/error.html", {
+            "headline": "Page not found",
+        })
 
 
 def search(request):
