@@ -14,7 +14,7 @@
     <input type="submit" value="Save" name="save">
     <hr>
     <small>To edit content, please write your content in a Markdown syntax</small>
-    <textarea name="content">{{ content }}</textarea>
+    <textarea name="content">{%if content%}{{content}}{%endif%}</textarea>
     </form>
 
 {% endblock %}
