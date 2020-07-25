@@ -84,10 +84,10 @@ def edit_page(request, title):
         content = util.get_entry(title)
         return render(request, "encyclopedia/edit_page.html", {
             "content": util.get_entry(title),
-            # "save": util.edit_entry(title, new_content2)
         })
         new_content = request.POST.get("content")
         new_content2 = new_content
+    # If save button is trigger, send content and new info to the edit util func.
     if save:
         util.edit_entry(title, new_content2)
         # If there's something to post, takes that input and use it in util functions.
@@ -98,10 +98,6 @@ def edit_page(request, title):
         return render(request, "encyclopedia/entry_page.html", {
             "title": markdowner.convert(util.get_entry(title))
         })
-    # else:
-    return render(request, "encyclopedia/entry_page.html", {
-        "title": markdowner.convert(util.get_entry(title))
-    })
 
 
 def random_page(request):
