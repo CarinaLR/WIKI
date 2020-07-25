@@ -74,30 +74,24 @@ def create(request):
 
 
 def edit_page(request, title):
+    # Set variables
     content = util.get_entry(title)
+    print("content 1 -", content)
     save = request.POST.get("save")
     if content == None:
         return render(request, "encyclopedia/error.html", {'headline': "Page Not Found"})
-    # Set variables
-    content = request.POST.get("content")
-    if request.method == "POST":
-        content = util.get_entry(title)
-        return render(request, "encyclopedia/edit_page.html", {
-            "content": util.get_entry(title),
-        })
-        new_content = request.POST.get("content")
-        new_content2 = new_content
     # If save button is trigger, send content and new info to the edit util func.
-    if save:
-        util.edit_entry(title, new_content2)
-        # If there's something to post, takes that input and use it in util functions.
-        return render(request, "encyclopedia/entry_page.html", {
-            "title": markdowner.convert(util.get_entry(title))
-        })
-    else:
-        return render(request, "encyclopedia/entry_page.html", {
-            "title": markdowner.convert(util.get_entry(title))
-        })
+        if request.method == "POST":
+            new_content = request.POST.get("content")
+            content = new_content
+            print("New content -", content)
+            # util.save_entry(title, content)
+            # If there's something to post, takes that input and use it in util functions.
+            return redirect("entry_page", title=title)
+    return render(request, "encyclopedia/edit_page.html", {
+        "title": title,
+        "content": content
+    })
 
 
 def random_page(request):
