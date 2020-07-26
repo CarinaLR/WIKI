@@ -36,12 +36,3 @@ def get_entry(title):
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
-
-
-def edit_entry(title, content):
-    filename = f"entries/{title}.md"
-    if default_storage.exists(filename):
-        # Overwrite it
-        if default_storage.open(f'{title}.md', 'w'):
-            default_storage.delete(filename)
-            default_storage.save(filename, ContentFile(content))

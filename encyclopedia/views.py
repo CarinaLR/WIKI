@@ -76,18 +76,16 @@ def create(request):
 def edit_page(request, title):
     # Set variables
     content = util.get_entry(title)
-    print("content 1 -", content)
     save = request.POST.get("save")
     if content == None:
         return render(request, "encyclopedia/error.html", {'headline': "Page Not Found"})
     new_content = request.POST.get("content")
     # If save button is trigger, send content and new info to the edit util func.
     if request.method == "POST":
+        # If there's something to post, takes that input and use it in util functions.
         if save:
             new_content = request.POST.get("content")
-            print("content 2 -", new_content)
             util.save_entry(title, new_content)
-            # If there's something to post, takes that input and use it in util functions.
             return render(request, "encyclopedia/entry_page.html", {
                 "title": title
             })
